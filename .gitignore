@@ -1,0 +1,6 @@
+# Python libraries and caches
+.mypy_cache
+.venv
+
+# Local environment
+.env

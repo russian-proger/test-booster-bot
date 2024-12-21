@@ -3,6 +3,7 @@
 from pathlib import Path
 
 from .bot.server import serve
+from .database.base import Base
 from .database.engine import get_engine, dispose_engine
 from .utils.env import load_env
 
@@ -13,7 +14,10 @@ def main():
     load_env(Path(__file__).parent.parent / Path('.env'))
 
     # Connect to PostgreSQL
-    get_engine()
+    engine = get_engine()
+
+    # Create tables
+    Base.metadata.create_all(engine)
 
     # Start serving telegram events
     serve()

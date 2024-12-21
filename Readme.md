@@ -28,5 +28,5 @@ All local environment is keeping in `.env` file. There are follow variables:
 - `POSTGRESQL_USER` - username
 - `POSTGRESQL_PASS` - password
 - `POSTGRESQL_HOST` - host (*ex. `localhost`*)
-- `POSTGRESQL_PORT` - port for connection
+- `POSTGRESQL_PORT` - port for connection (*`5432` is default*)
 - `POSTGRESQL_DATABASE` - name of the created database

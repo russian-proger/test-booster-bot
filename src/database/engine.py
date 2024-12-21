@@ -7,7 +7,7 @@ from sqlalchemy import Engine, create_engine
 from ..utils.singleton import singleton
 
 @singleton
-def get_connection() -> Engine:
+def get_engine() -> Engine:
     """ Return connection with database """
     credentials = [
         environ['POSTGRESQL_USER'],
@@ -21,6 +21,6 @@ def get_connection() -> Engine:
 
     return create_engine(uri)
 
-def close_connection():
+def dispose_engine():
     """ Close connection """
-    get_connection().dispose()
+    get_engine().dispose()

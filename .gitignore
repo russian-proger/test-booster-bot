@@ -1,4 +1,5 @@
 # Python libraries and caches
+__pycache__
 .mypy_cache
 .venv
 

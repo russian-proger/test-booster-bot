@@ -3,7 +3,7 @@
 from pathlib import Path
 
 from .bot.server import serve
-from .models.connection import close_connection, get_connection
+from .database.connection import close_connection, get_connection
 from .utils.env import load_env
 
 def main():

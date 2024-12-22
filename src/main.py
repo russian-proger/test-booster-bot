@@ -31,6 +31,7 @@ def main():
 
     # Create tables
     try:
+        Base.metadata.drop_all(engine)
         Base.metadata.create_all(engine)
     except Exception as e:
         print("❌ Couldn't update the scheme")

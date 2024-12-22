@@ -3,6 +3,7 @@
 from os import environ
 
 from sqlalchemy import Engine, create_engine
+from sqlalchemy.orm import Session
 
 from ..utils.singleton import singleton
 
@@ -24,3 +25,7 @@ def get_engine() -> Engine:
 def dispose_engine():
     """ Close connection """
     get_engine().dispose()
+
+def create_session() -> Session:
+    """ Return new session """
+    return Session(bind=get_engine())

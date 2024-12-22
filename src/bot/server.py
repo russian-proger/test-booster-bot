@@ -11,11 +11,13 @@ from telegram.ext.filters import TEXT
 
 from .messages import send_greeting
 from .messages import send_new_test
+from .services.start import add_user
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """ `start` command handler """
     if update.effective_chat is not None:
         await send_greeting(context.bot, update.effective_chat.id)
+        add_user(update)
 
 async def create_test(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """ `start` command handler """

@@ -1,0 +1,11 @@
+*Задание №4*
+Что покажет этот код?
+
+```python
+for j in 'Hi! I\'m mister Robert':
+	if j == '\'':
+	  print("Найдено")
+	  break
+else:
+	print ("Готово")
+```

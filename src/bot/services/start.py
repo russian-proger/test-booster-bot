@@ -20,6 +20,7 @@ def add_user(update: Update):
             fullname=f"{user_info.first_name} {user_info.last_name}",
             username=user_info.username,
             chat_id=user_info.id,
+            context="start"
         )
 
         session.add(user)

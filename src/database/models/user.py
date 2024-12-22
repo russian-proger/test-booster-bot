@@ -17,7 +17,7 @@ class User(Base):
     chat_id: Mapped[int] = mapped_column(Integer(), unique=True)
     fullname: Mapped[str] = mapped_column(String(60))
     username: Mapped[str] = mapped_column(String(60))
-    # context: Mapped[object] = mapped_column()
+    context: Mapped[str] = mapped_column(String(60))
 
     @staticmethod
     def find_by_chat_id(chat_id: int) -> 'User|None':

@@ -34,10 +34,8 @@ def serve():
     application = ApplicationBuilder().token(environ['TELEGRAM_TOKEN']).build()
 
     start_handler = CommandHandler('start', start)
-    new_test_handler = CommandHandler('newtest', create_test)
 
     application.add_handler(start_handler)
-    application.add_handler(new_test_handler)
     application.add_handler(MessageHandler(TEXT, handle_message))
 
     application.run_polling()

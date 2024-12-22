@@ -3,7 +3,6 @@
 from pathlib import Path
 
 from telegram import Bot
-from telegram import BotCommand
 from telegram import BotCommandScopeChat
 from telegram import ReplyKeyboardRemove
 
@@ -12,16 +11,7 @@ from ..utils.file import read_text
 async def send_greeting(bot: Bot, chat_id: int|str):
     """ Send greeting message """
 
-    await bot.set_my_commands(
-        [
-            BotCommand('/pass', 'Пройти тестирование'),
-            BotCommand('/myhistory', 'История пройденных тестирований'),
-            BotCommand('/newtest', 'Создать новое тестирование'),
-            BotCommand('/mytests', 'Созданные тестирования'),
-            BotCommand('/start', 'Приветственное сообщение')
-        ],
-        scope=BotCommandScopeChat(chat_id)
-    )
+    await bot.delete_my_commands(BotCommandScopeChat(chat_id))
 
     message_path = Path(__file__).parent / 'templates' / 'greeting.txt'
     greeting_message = read_text(message_path)

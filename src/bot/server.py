@@ -10,8 +10,15 @@ from telegram.ext import MessageHandler
 from telegram.ext.filters import TEXT
 
 from .messages import send_greeting
-from .messages import send_new_test
-from .services.start import add_user
+from .messages import send_message
+from .messages import send_ai_message
+from .messages import MSG_START_TESTING
+from .messages import PROMPT_ERROR_ANSWER
+
+from .states import *
+from .services.user import add_user
+from .services.user import get_user_by_update
+from ..database.engine import create_session
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """ `start` command handler """
@@ -19,15 +26,27 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await send_greeting(context.bot, update.effective_chat.id)
         add_user(update)
 
-async def create_test(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """ `start` command handler """
-    if update.effective_chat is not None:
-        await send_new_test(context.bot, update.effective_chat.id)
-
-async def handle_message(_update: Update, _context: ContextTypes.DEFAULT_TYPE):
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """ Message handler """
-    # print(update)
-    # print(update.callback_query)
+
+    if not update.message:
+        return
+    
+    user = get_user_by_update(update)
+    if not user:
+        return
+
+    bot = context.bot
+    message = update.message.text
+
+    if user.context == 'start':
+        if message == MSG_START_TESTING:
+            user.context = STATE_TASK_1
+            user.update()
+        else:
+            await send_ai_message(bot, user.chat_id, PROMPT_ERROR_ANSWER, message)
+
+
 
 def serve():
     """ Start serving """

@@ -13,3 +13,15 @@ def generate_start_message():
     res = get_llm().invoke(messages)
     return res.content
 
+def generate_message(system_prompt: str|None, user_prompt: str|None):
+    """ Generate custom message """
+    messages = []
+
+    if system_prompt:
+        messages.append(SystemMessage(content=system_prompt))
+
+    if user_prompt:
+        messages.append(HumanMessage(content=user_prompt))
+
+    res = get_llm().invoke(messages)
+    return res.content

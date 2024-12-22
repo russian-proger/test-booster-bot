@@ -16,7 +16,7 @@ def get_template(filename: str):
     return read_text(TEMPLATE_FOLDER / filename)
 
 MSG_START_TESTING = "Начать тестирование!"
-PROMPT_ERROR_ANSWER = get_template('prompt_error_answer.txt')
+PROMPT_ERROR_START_ANSWER = get_template('prompt_error_start_answer.txt')
 
 async def send_greeting(bot: Bot, chat_id: int|str):
     """ Send greeting message """

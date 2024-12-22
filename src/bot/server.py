@@ -10,15 +10,14 @@ from telegram.ext import MessageHandler
 from telegram.ext.filters import TEXT
 
 from .messages import send_greeting
-from .messages import send_message
 from .messages import send_ai_message
 from .messages import MSG_START_TESTING
-from .messages import PROMPT_ERROR_ANSWER
+from .messages import PROMPT_ERROR_START_ANSWER
 
-from .states import *
+from .states import STATE_START
+from .states import STATE_TASK_1
 from .services.user import add_user
 from .services.user import get_user_by_update
-from ..database.engine import create_session
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """ `start` command handler """
@@ -39,12 +38,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     bot = context.bot
     message = update.message.text
 
-    if user.context == 'start':
+    if user.context == STATE_START:
         if message == MSG_START_TESTING:
             user.context = STATE_TASK_1
             user.update()
         else:
-            await send_ai_message(bot, user.chat_id, PROMPT_ERROR_ANSWER, message)
+            await send_ai_message(bot, user.chat_id, PROMPT_ERROR_START_ANSWER, message)
+
 
 
 

@@ -15,7 +15,7 @@ def generate_start_message():
 
 def generate_message(system_prompt: str|None, user_prompt: str|None):
     """ Generate custom message """
-    messages = []
+    messages: list[SystemMessage|HumanMessage] = []
 
     if system_prompt:
         messages.append(SystemMessage(content=system_prompt))

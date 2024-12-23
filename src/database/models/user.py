@@ -17,6 +17,7 @@ class User(Base):
     fullname: Mapped[str] = mapped_column(String(60))
     username: Mapped[str] = mapped_column(String(60))
     context: Mapped[str] = mapped_column(String(60))
+    score: Mapped[int] = mapped_column(Integer(), default=0)
 
     @staticmethod
     def find_by_chat_id(chat_id: int) -> 'User|None':

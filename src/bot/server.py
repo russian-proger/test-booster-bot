@@ -80,10 +80,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await send_ai_message(bot, user.chat_id, PROMPT_ERROR_INCORRECT_OPTION, message)
             return
 
+        verdict = message == MSG_TASK_1_ANSWER
+
         user.context = STATE_TASK_2
+        user.score += int(verdict)
         user.update()
-        
-        await send_feedback(bot, user.chat_id, message == MSG_TASK_1_ANSWER)
+
+
+        await send_feedback(bot, user.chat_id, verdict)
         await send_task_2(bot, user.chat_id)
 
     elif user.context == STATE_TASK_2:
@@ -91,10 +95,13 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await send_ai_message(bot, user.chat_id, PROMPT_ERROR_INCORRECT_OPTION, message)
             return
 
+        verdict = message == MSG_TASK_2_ANSWER
+
         user.context = STATE_TASK_3
+        user.score += int(verdict)
         user.update()
 
-        await send_feedback(bot, user.chat_id, message == MSG_TASK_2_ANSWER)
+        await send_feedback(bot, user.chat_id, verdict)
         await send_task_3(bot, user.chat_id)
 
     elif user.context == STATE_TASK_3:
@@ -102,21 +109,26 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await send_ai_message(bot, user.chat_id, PROMPT_ERROR_INCORRECT_OPTION, message)
             return
 
+        verdict = message == MSG_TASK_3_ANSWER
+
         user.context = STATE_TASK_4
+        user.score += int(verdict)
         user.update()
 
-        await send_feedback(bot, user.chat_id, message == MSG_TASK_3_ANSWER)
+        await send_feedback(bot, user.chat_id, verdict)
         await send_task_4(bot, user.chat_id)
 
     elif user.context == STATE_TASK_4:
         if message not in MSG_TASK_4_OPTIONS:
             await send_ai_message(bot, user.chat_id, PROMPT_ERROR_INCORRECT_OPTION, message)
             return
+        verdict = message == MSG_TASK_4_ANSWER
 
         user.context = STATE_TASK_5
+        user.score += int(verdict)
         user.update()
 
-        await send_feedback(bot, user.chat_id, message == MSG_TASK_4_ANSWER)
+        await send_feedback(bot, user.chat_id, verdict)
         await send_task_5(bot, user.chat_id)
 
     elif user.context == STATE_TASK_5:
@@ -128,18 +140,22 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         filename = f"task_5_{user.id}_{time.time()}.py"
         f = await bot.get_file(update.message.document)
-        
+
         filepath = FOLDER_DOWNLOADS / filename
         await f.download_to_drive(filepath)
 
         result = check_task_5_solution(filepath)
         verdict = (result[0] == result[1])
 
-        await send_feedback(bot, user.chat_id, verdict)
-        await send_finish(bot, user.chat_id)
-
         user.context = STATE_FINISH
+        user.score += int(verdict)
         user.update()
+
+        await send_feedback(bot, user.chat_id, verdict)
+        await send_finish(bot, user.chat_id, [user.score, 5])
+
+    elif user.context == STATE_FINISH:
+        pass
 
     else:
         user.context = STATE_START

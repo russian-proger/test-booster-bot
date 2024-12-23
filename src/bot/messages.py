@@ -107,5 +107,5 @@ async def send_task_5(bot: Bot, chat_id: int|str):
     markup = ReplyKeyboardMarkup([[KeyboardButton(MSG_SKIP_TASK)]], True)
     await bot.sendMessage(chat_id, get_template('task_5.txt'), ParseMode.MARKDOWN_V2, reply_markup=markup)
 
-async def send_finish(bot: Bot, chat_id: int|str):
-    await bot.sendMessage(chat_id, get_template('finish.txt'), reply_markup=ReplyKeyboardRemove())
+async def send_finish(bot: Bot, chat_id: int|str, params=[]):
+    await bot.sendMessage(chat_id, get_template('finish.txt').format(*params), reply_markup=ReplyKeyboardRemove())

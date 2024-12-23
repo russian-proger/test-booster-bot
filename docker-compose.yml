@@ -1,0 +1,5 @@
+services:
+  test-booster:
+    build: .
+    volumes:
+      - ".env:/app/.env"

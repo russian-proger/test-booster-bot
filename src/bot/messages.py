@@ -30,6 +30,7 @@ MSG_TASK_4_OPTIONS = ["Найдено", "Готово", "Ошибка"]
 MSG_TASK_4_ANSWER = MSG_TASK_4_OPTIONS[0]
 
 MSG_START_TESTING = "Начать тестирование!"
+MSG_SKIP_TASK = "Пропустить задание"
 PROMPT_ERROR_START_ANSWER = get_template('prompt_error_start_answer.txt')
 PROMPT_ERROR_INCORRECT_OPTION = get_template('prompt_error_incorrect_option.txt')
 
@@ -101,6 +102,10 @@ async def send_task_3(bot: Bot, chat_id: int|str):
 async def send_task_4(bot: Bot, chat_id: int|str):
     markup = buildMarkup(MSG_TASK_4_OPTIONS)
     await bot.sendMessage(chat_id, get_template('task_4.txt'), ParseMode.MARKDOWN_V2, reply_markup=markup)
+
+async def send_task_5(bot: Bot, chat_id: int|str):
+    markup = ReplyKeyboardMarkup([[KeyboardButton(MSG_SKIP_TASK)]], True)
+    await bot.sendMessage(chat_id, get_template('task_5.txt'), ParseMode.MARKDOWN_V2, reply_markup=markup)
 
 async def send_finish(bot: Bot, chat_id: int|str):
     await bot.sendMessage(chat_id, get_template('finish.txt'), reply_markup=ReplyKeyboardRemove())

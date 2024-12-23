@@ -1,15 +1,19 @@
 """ Entrypoint """
 
-import asyncio
 from pathlib import Path
 
 from .bot.server import serve
 from .database.base import Base
 from .database.engine import get_engine, dispose_engine
 from .utils.env import load_env
+from .utils.constants import FOLDER_DOWNLOADS
 
 def main():
     """ Main function """
+
+    if not FOLDER_DOWNLOADS.exists():
+        print("💡 Folder `telegram_downloads` has been created")
+        FOLDER_DOWNLOADS.mkdir()
 
     # Load environment
     try:

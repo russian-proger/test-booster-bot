@@ -2,9 +2,10 @@
 Что покажет этот код?
 
 ```python
-for j in 'Hi! I\'m mister Robert':
-	if j == '\'':
-	  print("Найдено")
+for j in 'Hi! I\\'m mister Robert':
+	if j == '\\'':
+':
+но")
 	  break
 else:
 	print ("Готово")

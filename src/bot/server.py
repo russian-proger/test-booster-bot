@@ -133,6 +133,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     elif user.context == STATE_TASK_5:
         if message == MSG_SKIP_TASK:
+            user.context = STATE_FINISH
+            user.update()
+            await send_finish(bot, user.chat_id, [user.score, 5])
             return
 
         if not update.message.document:

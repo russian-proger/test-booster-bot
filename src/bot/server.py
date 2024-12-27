@@ -4,8 +4,9 @@ from os import environ
 
 from telegram.ext import ApplicationBuilder
 
-from .commands import init_commands
+from .command_handlers import init_commands
 from .callbacks import init_callbacks
+from .message_handlers import init_message_handlers
 
 def serve():
     """ Start serving """
@@ -13,5 +14,6 @@ def serve():
 
     init_commands(application)
     init_callbacks(application)
+    init_message_handlers(application)
 
     application.run_polling()

@@ -1,4 +1,3 @@
-from telegram import 
 from telegram.ext import Application
 from telegram.ext import CommandHandler
 

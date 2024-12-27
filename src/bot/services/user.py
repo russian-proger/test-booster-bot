@@ -3,9 +3,9 @@
 from telegram import Update
 
 from ...database.engine import create_session
-from ...database.models.user import User
+from ...database.models import User
 
-from ..states import *
+from ..context import CTX_START
 
 def get_user_by_update(update: Update) -> User | None:
     """ Find user by updating information """
@@ -24,11 +24,14 @@ def add_user(update: Update):
         if get_user_by_update(update):
             return
 
+        fullname = f"{user_info.first_name or ''} {user_info.last_name or ''}"
         user = User(
-            fullname=f"{user_info.first_name} {user_info.last_name}",
+            firstname=user_info.first_name or '',
+            lastname=user_info.last_name or '',
+            fullname=fullname.strip(),
             username=user_info.username,
             chat_id=user_info.id,
-            context=STATE_START
+            context=CTX_START
         )
 
         session.add(user)

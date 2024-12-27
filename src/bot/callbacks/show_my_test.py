@@ -3,7 +3,7 @@ from telegram import InlineKeyboardMarkup
 from telegram import Update
 from telegram.ext import ContextTypes
 
-async def handle_mytest_clb(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def handle_show_my_test_clb(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """ callback handler """
     assert update.callback_query is not None
     assert update.effective_chat is not None

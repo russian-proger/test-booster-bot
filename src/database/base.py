@@ -22,8 +22,7 @@ class Base(DeclarativeBase):
                 field_type = type(self.__class__.__dict__.get(item, None))
                 is_column = field_type is InstrumentedAttribute
 
-                if is_column:
+                if is_column and not field_name.startswith('f_'):
                     mapped_values[field_name] = getattr(self, field_name)
-
             session.query(self.__class__).filter(self.__class__.id == self.id).update(mapped_values)
             session.commit()
